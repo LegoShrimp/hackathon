@@ -10,9 +10,9 @@
 		<script src='/socket.io/socket.io.js'></script>
 		<script type='text/javascript' src='./board.js'></script>	
 
-		<script type='text/javascript' src='./bower_components/bootstrap/js/tooltip.js'></script>
+<!--		<script type='text/javascript' src='./bower_components/bootstrap/js/tooltip.js'></script>-->
 		<script type='text/javascript'>
-			$('.tips').tooltip();
+		//	$('.tips').tooltip();
 		</script>
 
         <!-- ============================================== -->
@@ -43,7 +43,7 @@
 
 
 	<!--============================== Begin Drawing toools ===============================-->
-						<center><b><p>Drawing Tools: </p></b></center>
+						<center><b><p>Drawing Tools</p></b></center>
 	<!--============================== Begin Brush Select =================================-->
 						<b><p>Tool Selection: </p></b>
 	<!-- Brush tools Tool:Pencil ==========================================================-->
@@ -55,7 +55,7 @@
 					  	</div>
 	<!-- Brush tools Tool:Line (not functional) ===========================================-->
 						<div id="column1" style="float:left; margin:0; width:33%;">
-							<button title="Line tool" type="button" onclick="changeMode(2))" id="btn-pencil" class="bin bin-default tips"> 
+							<button title="Line tool" type="button" onclick="changeMode(2)" id="btn-pencil" class="bin bin-default tips"> 
 					 			<img src="./line.jpg" height="20" width="20">
 					 		</button>
 						</div>

@@ -26,6 +26,7 @@ var socket = io.connect('http://localhost:8080');
 	//Mode 0 = pencil
 	//Mode 1 = erase
 	//Mode 3 = line
+	//Mode 4 = ????
 	var brushMode = 0;//Default to pencil tool
 	function changeMode(mode){
 		brushMode = mode;//Update the current brush mode
@@ -61,46 +62,51 @@ window.onload = function() {
 			path.strokeColor = 'white';//Set color to white May be better to have an erase that actually erases.
 			path.strokeCap = 'round';
 			path.add(event.point);
-			socket.emit('addPath',{ id:user.id,
-					    x:event.point.x,
-					    y:event.point.y, 
-						size:path.strokeWidth,
-						color:path.strokeColor,
-						cap:path.strokeCap,
-						flag:0});
+			socket.emit('addPath',{  id:user.id,
+					flag:0,
+					p1:event.point,
+					p2:tpoint,
+					size:path.strokeWidth,
+					color:path.strokeColor,
+					cap:path.strokeCap});
+
 		}else if(brushMode===0){
 			path = new Path();
 			path.strokeCap = 'round';
 			path.strokeWidth = brushSize;
 			path.strokeColor = brushColor;
 			path.add(event.point);
-			socket.emit('addPath',{ id:user.id,
-			    p1:event.point, 
-				size:path.strokeWidth,
-				color:path.strokeColor,
-				cap:path.strokeCap,
-				flag:0});
+			socket.emit('addPath',{  id:user.id,
+					flag:0,
+					p1:event.point,
+					p2:tpoint,
+					size:path.strokeWidth,
+					color:path.strokeColor,
+					cap:path.strokeCap});
 
 		}else if(brushMode===2){//most complex since it must wait for two clicks
 			if(numPoints === 0){
-				numPoints = 1;
-				tpoint=event.point;
+				tpoint.x = event.point.x;
+				tpoint.y = event.point.y;
+				numPoints = numPoints + 1;
 			}else{
-				numPoints = 0;
-				path = new Path.Line(tpoint,event.point);
-				path.strokeCap = 'round';
+				numPoints=0;
+				path = new Path.line(tpoint, event.point);
 				path.strokeColor = brushColor;
 				path.strokeWidth = brushSize;
 				socket.emit('addPath',{ id:user.id,
-		 		    eventp:event.point, 
-		 		    p2:tpoint,
+					flag:1,
+					p1:event.point,
+					p2:tpoint,
 					size:path.strokeWidth,
 					color:path.strokeColor,
-					cap:path.strokeCap,
-					flag:1});
+					cap:path.strokeCap});
+
 			}
 
 		}
+
+
 
 
 		view.draw();
@@ -113,27 +119,15 @@ window.onload = function() {
 
 	//}
 
-	/*tool.onMouseUp = function(event) {
-		path.add(event.point);
 
-		socket.emit('addPoint',{ id:user.id,
-		                         x:event.point.x,
-								 y:event.point.y });
-		view.draw();
-
-	}*/
 
 	tool.onMouseDrag = function(event) {
-		if(brushMode == 2){
-
-		}else{
 		path.add(event.point);
 
 		socket.emit('addPoint',{ id:user.id,
 		                         x:event.point.x,
 								 y:event.point.y });
 		view.draw();
-	}
 	}
 
 	//helper for finding user in array of users (guests)
@@ -169,21 +163,17 @@ window.onload = function() {
 	socket.on('addPath', function (data){
 		var index = findUser( guests, data.id );
 		if ( index > -1 ){
-			if(data.flag==0){
+			if(data.flag==1){
+
+
+			}else{
 				var tmpPath = new Path();
 				tmpPath.strokeWidth = data.size;
 				tmpPath.strokeCap = data.cap;
 				tmpPath.strokeColor = data.color;
-			}else{//TODO Make lines print for guests
-				var tmpPath = new Path.Line(data.p2, data.p1);
-				tmpPath.strokeWidth = data.size;
-				tmpPath.strokeColor = data.color;
-				tmpPath.strokeCap = data.cap;
 			}
 			guests[index].path = tmpPath;
-		//	console.log('path stuff: ' + tmpPath);
-			view.draw();
-
+			
 		}
 	});
 
