@@ -5,6 +5,10 @@
 		$routeProvider
 			.when("/",
 				{
+					templateUrl:"/views/login.html"
+				})
+			.when("/room",
+				{
 					controller:"boardControl",
 					templateUrl:"/views/room.html"
 				})
