@@ -1,2 +1,6 @@
 *~
 *.swp
+node_modules/
+static/bower_components/*
+database/credentials.js
+database/heroku_orig_credentials.js

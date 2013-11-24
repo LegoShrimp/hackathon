@@ -1,7 +1,10 @@
+//var conString = "pg://
+
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     io = require('./sockets.js').listen(server),
+    client = require('./database/database.js').client,
     util = require('util');
 
 var port = process.env.PORT || 8080;
