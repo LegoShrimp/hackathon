@@ -9,3 +9,50 @@
 
 
  }
+
+ .block-black {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:black;
+ }
+ .block-red {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:red;
+ }
+
+ .block-green {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:green;
+ }
+
+ .block-blue {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:blue;
+ }
+
+ .block-orange {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:orange;
+ }
+
+ .block-pink {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:pink;
+ }
+
+ .block-purple {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:purple;
+ }
+
+ .block-yellow {
+ 	width:20px;
+ 	height:20px;
+ 	background-color:yellow;
+ }

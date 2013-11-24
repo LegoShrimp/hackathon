@@ -64,8 +64,8 @@ window.onload = function() {
 			socket.emit('addPath',{ id:user.id,
 					    x:event.point.x,
 					    y:event.point.y, 
-						size:path.strokeWidth,
-						color:path.strokeColor,
+						sz:path.strokeWidth,
+						cl:path.strokeColor,
 						cap:path.strokeCap,
 						flag:0});
 		}else if(brushMode===0){
@@ -76,8 +76,8 @@ window.onload = function() {
 			path.add(event.point);
 			socket.emit('addPath',{ id:user.id,
 			    p1:event.point, 
-				size:path.strokeWidth,
-				color:path.strokeColor,
+				sz:path.strokeWidth,
+				cl:path.strokeColor,
 				cap:path.strokeCap,
 				flag:0});
 
@@ -94,8 +94,8 @@ window.onload = function() {
 				socket.emit('addPath',{ id:user.id,
 		 		    eventp:event.point, 
 		 		    p2:tpoint,
-					size:path.strokeWidth,
-					color:path.strokeColor,
+					sz:path.strokeWidth,
+					cl:path.strokeColor,
 					cap:path.strokeCap,
 					flag:1});
 			}
@@ -171,13 +171,13 @@ window.onload = function() {
 		if ( index > -1 ){
 			if(data.flag==0){
 				var tmpPath = new Path();
-				tmpPath.strokeWidth = data.size;
+				tmpPath.strokeWidth = data.sz;
 				tmpPath.strokeCap = data.cap;
-				tmpPath.strokeColor = data.color;
+				tmpPath.strokeColor = data.cl;
 			}else{//TODO Make lines print for guests
 				var tmpPath = new Path.Line(data.p2, data.p1);
-				tmpPath.strokeWidth = data.size;
-				tmpPath.strokeColor = data.color;
+				tmpPath.strokeWidth = data.sz;
+				tmpPath.strokeColor = data.cl;
 				tmpPath.strokeCap = data.cap;
 			}
 			guests[index].path = tmpPath;
