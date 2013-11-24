@@ -5,7 +5,7 @@ var express = require('express'),
     server = require('http').createServer(app),
     io = require('./sockets.js').listen(server),
     util = require('util');
-
+    client = require('./database/database.js').client,
 /************** POSTGRES DATABASE STUFF **************/
 
 // Require posgres
@@ -62,7 +62,6 @@ user_query.on("end", function(result) {
 */
 
 /*****************************************************/
-
 var port = process.env.PORT || 8080;
 server.listen(port, function (){
     util.log('Server started on port ' + port);
