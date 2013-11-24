@@ -1,3 +1,140 @@
 <div ng-init='initBoard()'>
-	<canvas id='whiteBoard'></canvas>
+		    	<div class="row">
+				<div class="col-md-2">	
+					<div class="tools-container">
+	<!-- ============================ This is the section to add users to the room ========-->
+						<center><b><p>Room code:</p></b></center>
+						<!--TODO Add code disply -->
+
+
+	<!--============================== Begin Drawing toools ===============================-->
+						<center><b><p>Drawing Tools</p></b></center>
+	<!--============================== Begin Brush Select =================================-->
+						<b><p>Tool Selection: </p></b>
+	<!-- Brush tools Tool:Pencil ==========================================================-->
+		        		<div id="column1" style="float:left; margin:0; width:33%;">
+							<button title="Pencil tool" type="button" ng-click="brushMode=0" id="btn-pencil" class="bin bin-default tips">
+					 	<!--	<img src="./black.jpg" height="20" width="20"> -->
+							    <span class="glyphicon glyphicon-pencil"></span><!--TODO add picture for pencil, line, eraser -->
+		                   	</button>
+					  	</div>
+	<!-- Brush tools Tool:Line (not functional) ===========================================-->
+						<div id="column1" style="float:left; margin:0; width:33%;">
+							<button title="Line tool" type="button" ng-click="brushMode=2" id="btn-pencil" class="bin bin-default tips"> 
+					 			<img src="./line.jpg" height="20" width="20">
+					 		</button>
+						</div>
+	<!-- Brush tools Tool:Erase ===========================================================-->
+					    <div id="column2" style="float:left; margin:0;width:33%;">
+						    <button title="Erase tool" type="button" ng-click="brushMode=1" id="btn-erase" class="bin bin-default tips"> 
+								<img src="./img.jpg" height="20" width="20">				
+							</button>
+		                </div>
+
+								<!--Brush Size-->
+	<!-- Brush size Size:1 ================================================================-->
+						<b><p>Brush Size: </p></b>
+		        		<div id="column1" style="float:left; margin:0; width:25%;">
+							<button title="brush size 1" type="button"  ng-click="brushSize=1" id="btn-size1" class="bin bin-default tips"> 
+									   	<!--	<img src="./black.jpg" height="20" width="20"> -->
+		          				1   
+							</button>
+						</div>
+	<!-- Brush size Size:1 ================================================================-->	 
+					    <div id="column2" style="float:left; margin:0;width:25%;">
+						      			
+							<button title="brush size 2" type="button" ng-click="brushSize=8" id="btn-size2" class="bin bin-default tips"> 
+									   <!--	    <img src="./red.jpg" height="20" width="20"> -->
+						   		2
+						 	</button>   
+							      	
+						</div>
+	<!-- Brush size Size:1 ================================================================-->							  
+						<div id="column3" style="float:left; margin:0;width:25%">			      
+							<button title="brush size 3" type="button"  ng-click="brushSize=27"  id="btn-size3" class="bin bin-default tips"> 
+									   <!--		<img src="./green.jpg" height="20" width="20"> -->
+								3
+							</button>   
+						</div>
+	<!-- Brush size Size:1 ================================================================-->		
+						<div id="column4" style="float:left; margin:0;width:25%">			      
+							<button title="brush size 4" type="button" ng-click="brushSize=64" id="btn-size4" class="bin bin-default tips"> 
+									   <!--		<img src="./blue.jpg" height="20" width="20"> -->
+								4
+							</button> 
+		             	</div>
+								<!--COLORS-->
+								
+
+		                           			<!--Row1--> 
+	<!-- Colors Row 1 Color:Black =========================================================-->
+						<b><p>Colors: </p></b>
+		        		<div id="column1" style="float:left; margin:0; width:25%;">
+							<button title="Black" type="button" ng-click="brushColor='black'" id="btn-black" class="bin bin-default tips"> 
+								<div class="block-black"></div>
+							</button>
+						</div>
+	<!-- Colors Row 1 Color:Red ===========================================================-->	 
+					    <div id="column2" style="float:left; margin:0;width:25%;">
+							<button title="Red" type="button" ng-click="brushColor='red'" id="btn-red" class="bin bin-default tips"> 
+								<div class="block-red"></div>
+							</button> 
+						</div>
+	<!-- Colors Row 1 Color:Green =========================================================-->						  
+						<div id="column3" style="float:left; margin:0;width:25%">
+							<button title="Green" type="button" ng-click="brushColor='green'" id="btn-green" class="bin bin-default tips"> 
+								<div class="block-green"></div>
+							</button>   
+						</div>
+	<!-- Colors Row 1 Color:Blue ==========================================================-->
+						
+						<div id="column4" style="float:left; margin:0;width:25%">
+							<button title="Blue" type="button" ng-click="brushColor='blue'" id="btn-blue" class="bin bin-default tips"> 
+								<div class="block-blue"></div>
+							</button>  
+						</div>
+	<!-- Colors Row 2 Color:Orange ========================================================-->
+						<div id="column1" style="float:left; margin:0; width:25%;">
+							<button title="Orange" type="button" ng-click="brushColor='orange'" id="btn-orange" class="bin bin-default tips"> 
+								<div class="block-orange"></div>
+							</button>
+						</div>
+	<!-- Colors Row 2 Color:Pink ==========================================================-->
+						<div id="column2" style="float:left; margin:0;width:25%;">
+							<button title="Pink" type="button" ng-click="brushColor='pink'"  id="btn-pink" class="bin bin-default tips"> 
+								<div class="block-pink"></div>
+							</button>   
+						</div>
+	<!-- Colors Row 2 Color:Purple ========================================================-->			  
+						<div id="column3" style="float:left; margin:0;width:25%">
+							<button title="Purple" type="button" ng-click="brushColor='purple'" id="btn-purple" class="bin bin-default tips"> 
+								<div class="block-purple"></div>
+							</button>   
+						</div>
+	<!-- Colors Row 2 Color:Yellow ========================================================-->			
+						<div id="column3" style="float:left; margin:0;width:25%">
+							<button title="Yellow" type="button" ng-click="brushColor='yellow'" id="btn-yellow" class="bin bin-default tips"> 
+								<div class="block-yellow"></div>
+							</button>
+						</div>
+	<!--Upload Image as backround button! =================================================-->
+						<div class="form">
+							<div class="form-group">
+								<label for="exampleInputFile">Input Backround File</label>
+								<input type="file" id="exampleInputFile">
+							</div>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</div>
+
+	<!--PLACE for room members ============================================================-->
+						<b><p>Room Members/Online Users: </p></b><!--outputs the users in the room -->
+					</div>
+				</div>
+
+
+	<!-- Canvas ===========================================================================-->
+				<div class="col-md-10">
+					<canvas id='whiteBoard'> </canvas><!-- for now canvas is designed as a 1000px x 600px, may want to change so that it is a more standard size-->	
+				</div>
+			</div>
 </div>
