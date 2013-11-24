@@ -1,29 +1,194 @@
 <!doctype html>
 <html lang='en'>
-<head>
-	<meta charset='utf-8'>
-	
-	<!--needed for module to work-->
-	<script type='text/javascript' src='./paper/dist/paper.js'></script>
-	<script type='text/javascript' src='./user.js'></script>
-	<script src='/socket.io/socket.io.js'></script>
-	<script type='text/javascript' src='./board.js'></script>
-	<!---------------------------->
-	
-	<title>The Canvas</title>
+	<head>
+        <meta charset='utf-8'>
+        <link rel='stylesheet' href='./bower_components/bootstrap/dist/css/bootstrap.css'>
+        <link rel='stylesheet' href='./style.css'>
+        <!--Stuff for Canvas-->
+        <script type='text/javascript' src='./paper/dist/paper.js'></script>
+		<script type='text/javascript' src='./user.js'></script>
+		<script src='/socket.io/socket.io.js'></script>
+		<script type='text/javascript' src='./board.js'></script>	
 
+		<script type='text/javascript' src='./bower_components/bootstrap/js/tooltip.js'></script>
+		<script type='text/javascript'>
+			$('.tips').tooltip();
+		</script>
+
+        <!-- ============================================== -->
+        <!--Tooltips-->
+
+        <title>Get Stuff Done Home</title>
+	</head>
 	<style>
 		#whiteBoard {
-			width:500px;
-			height:500px;
+			width:1000px;
+			height:600px;
 			display:block;
 			margin-left:auto;
 			margin-right:auto;
 			border:1px solid black;
 		}
 	</style>
-</head>
-<body>
-	<canvas id='whiteBoard'></canvas>
-</body>
+	<body>
+
+   <center> <p>Get Stuff Done!!!</p></center>
+
+   	<div class="container"> 
+		<!-- This is the toolbar and canvas -->
+    	<div class="row">
+		<div class="col-md-2">	
+			<div class="tools-container">
+			<!-- ============================ This is the section to add users to the room ======== -->
+			<!--TODO Make it not crash when given no input and submit is clicked
+			Potentially also figure out how to not reload the page on submit(probably harder)-->
+				<center><b><p>Add users to the whiteboard </p></b></center>
+				<form role="form-inline">
+					<div class="form-group">
+						<label class="sr-only" for="exampleInput">Add User</label>
+						<input type="username" class="form-control" id="addUserToRoom" placeholder="Enter username">
+					</div>
+					<button title="Will be able to contribute." type="submit" class="btn btn-default tips">Add</button>
+					<button title="Mods have the ability to contribute and invite other people as users" type="submit" class="btn btn-default tips">Mod
+
+					</button>
+					<button title="Remove from room" type="submit" class="btn btn-default tips">Remove</button>
+				</form>
+
+
+				<center><b><p>Drawing Tools: </p></b></center>
+
+					<!--Marker and eraser-->
+					<b><p>Tool Selection: </p></b>
+                        
+        					<div id="column1" style="float:left; margin:0; width:33%;">
+							   <button title="Pencil tool" type="button" onclick="changeMode(0)" id="btn-pencil" class="bin bin-default tips"> 
+							   	<!--	 <div class="tooltip">
+										  <div class="tooltip-inner">
+										     Tooltip!
+											</div>
+										  <div class="tooltip-arrow"></div>
+									 </div>
+									 <span class="add-on tips" title="West"></span>-->
+
+
+					 	<!--	<img src="./black.jpg" height="20" width="20"> -->
+							    	<span class="glyphicon glyphicon-pencil"></span>
+                               	</button>
+					  	</div>
+					  		<div id="column1" style="float:left; margin:0; width:33%;">
+
+							   <button title="Line tool" type="button" onclick="changeMode(2))" id="btn-pencil" class="bin bin-default tips"> 
+		
+					 		<img src="./line.jpg" height="20" width="20"> 
+							    
+                               	</button>
+					  	</div>
+			 
+			    			<div id="column2" style="float:left; margin:0;width:33%;">
+				      			   <button title="Erase tool" type="button" onclick="changeMode(1)" id="btn-erase" class="bin bin-default tips"> 
+								    <img src="./img.jpg" height="20" width="20">
+									
+                               		</button>
+                            </div>
+
+						<!--Brush Size-->
+						<b><p>Brush Size: </p></b>
+        					<div id="column1" style="float:left; margin:0; width:25%;">
+							   <button title="brush size 1" type="button"  onclick="changeSize(1)" id="btn-size1" class="bin bin-default tips"> 
+							   	<!--	<img src="./black.jpg" height="20" width="20"> -->
+                                    				1   
+						  	   </button>
+					  	</div>
+			 
+			    			<div id="column2" style="float:left; margin:0;width:25%;">
+				      			
+							   <button title="brush size 2" type="button" onclick="changeSize(2)" id="btn-size2" class="bin bin-default tips"> 
+							   <!--	    <img src="./red.jpg" height="20" width="20"> -->
+				                                    2
+				 			   </button>   
+					      	
+						</div>
+						  
+						<div id="column3" style="float:left; margin:0;width:25%">
+							      
+							   <button title="brush size 3" type="button"  onclick="changeSize(3)"  id="btn-size3" class="bin bin-default tips"> 
+							   <!--		<img src="./green.jpg" height="20" width="20"> -->
+								     3
+							   </button>   
+						</div>
+				
+						<div id="column4" style="float:left; margin:0;width:25%">
+							      
+							   <button title="brush size 4" type="button" onclick="changeSize(4)" id="btn-size4" class="bin bin-default tips"> 
+							   <!--		<img src="./blue.jpg" height="20" width="20"> -->
+								     4
+							   </button>  
+
+                             			</div>
+						<!--COLORS-->
+						
+
+                           			<!--Row1--> 
+	                 	
+						<b><p>Colors: </p></b>
+        					<div id="column1" style="float:left; margin:0; width:25%;">
+							   <button title="Black" type="button" onclick="changeColor('black')" id="btn-black" class="bin bin-default tips"> 
+						   		<img src="./black.jpg" height="20" width="20">
+							   </button>
+					  	</div>
+			 
+			    			<div id="column2" style="float:left; margin:0;width:25%;">
+				      			   <button title="Red" type="button" onclick="changeColor('red')" id="btn-red" class="bin bin-default tips"> 
+						   		<img src="./red.jpg" height="20" width="20">
+							   </button>   
+					      	</div>
+						  
+						<div id="column3" style="float:left; margin:0;width:25%">
+						  	   <button title="Green" type="button" onclick="changeColor('green')" id="btn-green" class="bin bin-default tips"> 
+							   	<img src="./green.jpg" height="20" width="20">
+							   </button>   
+						</div>
+				
+						<div id="column4" style="float:left; margin:0;width:25%">
+							  <button title="Blue" type="button" onclick="changeColor('blue')" id="btn-blue" class="bin bin-default tips"> 
+						   		<img src="./blue.jpg" height="20" width="20">
+						   	  </button>  
+						</div>
+
+						<div id="column1" style="float:left; margin:0; width:25%;">
+							  <button title="Orange" type="button" onclick="changeColor('orange')" id="btn-orange" class="bin bin-default tips"> 
+							  	<img src="./orange.jpg" height="20" width="20">
+							  </button>
+					  	</div>
+			 
+			    			<div id="column2" style="float:left; margin:0;width:25%;">
+				      			   <button title="Pink" type="button" onclick="changeColor('pink')"  id="btn-pink" class="bin bin-default tips"> 
+						   		<img src="./pink.jpg" height="20" width="20">
+					 		   </button>   
+					      	</div>
+						  
+						<div id="column3" style="float:left; margin:0;width:25%">
+							   <button title="Purple" type="button" onclick="changeColor('purple')" id="btn-purple" class="bin bin-default tips"> 
+							   	<img src="./purple.jpg" height="20" width="20">
+							   </button>   
+						</div>
+				
+						<div id="column3" style="float:left; margin:0;width:25%">
+							   <button title="Yellow" type="button" onclick="changeColor('yellow')" id="btn-yellow" class="bin bin-default tips"> 
+                                    				<img src="./yellow.jpg" height="20" width="20">
+                                                           </button>
+                               			</div>
+
+			</div>
+				</div>
+				<div class="col-md-10">
+					<canvas id='whiteBoard'> </canvas><!-- for now canvas is designed as a 1000px x 600px, may want to change so that it more standard-->	
+					</div>
+				</div>
+		</div>
+	</div>
+	</div>
+	</body>
 </html>
+

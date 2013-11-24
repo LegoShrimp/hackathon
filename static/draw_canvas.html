@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+	
+	<!--needed for module to work-->
+	<script type='text/javascript' src='./paper/dist/paper.js'></script>
+	<script type='text/javascript' src='./user.js'></script>
+	<script src='/socket.io/socket.io.js'></script>
+	<script type='text/javascript' src='./board.js'></script>
+	<!---------------------------->
+	
+	<title>The Canvas</title>
+
+	<style>
+		#whiteBoard {
+			width:500px;
+			height:500px;
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
+			border:1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='whiteBoard'></canvas>
+</body>
+</html>
