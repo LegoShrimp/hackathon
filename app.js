@@ -5,7 +5,7 @@ var express = require('express'),
     server = require('http').createServer(app),
     io = require('./sockets.js').listen(server),
     util = require('util');
-    client = require('./database/database.js').client,
+//    client = require('./database/database.js').client;
 /************** POSTGRES DATABASE STUFF **************/
 
 // Require posgres
