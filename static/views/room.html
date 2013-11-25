@@ -12,22 +12,28 @@
 	<!--============================== Begin Brush Select =================================-->
 						<b><p>Tool Selection: </p></b>
 	<!-- Brush tools Tool:Pencil ==========================================================-->
-		        		<div id="column1" style="float:left; margin:0; width:33%;">
+		        		<div id="column1" style="float:left; margin:0; width:20%;">
 							<button title="Pencil tool" type="button" ng-click="brushMode=0" id="btn-pencil" class="bin bin-default tips">
 					 	<!--	<img src="./black.jpg" height="20" width="20"> -->
 							    <span class="glyphicon glyphicon-pencil"></span><!--TODO add picture for pencil, line, eraser -->
 		                   	</button>
 					  	</div>
 	<!-- Brush tools Tool:Line (not functional) ===========================================-->
-						<div id="column1" style="float:left; margin:0; width:33%;">
+						<div id="column1" style="float:left; margin:0; width:20%;">
 							<button title="Line tool" type="button" ng-click="brushMode=2" id="btn-pencil" class="bin bin-default tips"> 
 					 			<img src="./line.jpg" height="20" width="20">
 					 		</button>
 						</div>
 	<!-- Brush tools Tool:Erase ===========================================================-->
-					    <div id="column2" style="float:left; margin:0;width:33%;">
+					    <div id="column2" style="float:left; margin:0;width:20%;">
 						    <button title="Erase tool" type="button" ng-click="brushMode=1" id="btn-erase" class="bin bin-default tips"> 
 								<img src="./img.jpg" height="20" width="20">				
+							</button>
+		                </div>
+	<!-- Brush tools Tool:clear ===========================================================-->
+					    <div id="column2" style="float:left; margin:0;width:40%;">
+						    <button title="clear tool:click anywhere on the canvas to clear it" type="button" ng-click="clr=1" id="btn-clr" class="bin bin-default tips"> 
+								clear				
 							</button>
 		                </div>
 
@@ -123,11 +129,11 @@
 								<label for="exampleInputFile">Input Backround File</label>
 								<input type="file" id="exampleInputFile">
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
+							<button type="submit" class="btn btn-default" >Submit</button>
 						</div>
 
 	<!--PLACE for room members ============================================================-->
-						<b><p>Room Members/Online Users: </p></b><!--outputs the users in the room -->
+						<b><p>Room Members : </p></b><!--outputs the users in the room -->
 					</div>
 				</div>
 

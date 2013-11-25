@@ -4,44 +4,16 @@ function boardControl($scope,socket){
 	$scope.brushColor = 'black';
 	$scope.brushSize = 1;
 	$scope.brushMode = 0;
+	$scope.clr = 0;
 
 	$scope.initBoard = function() {
 		//install paper to global scope
 		paper.install(window);
 	
 
-		//=======================================================================
-		//Functions to change the brush variables NOW DONE WITH ng-click
-		//=======================================================================
-			/*var brushColor = 'red';//Default to color black
-
-			//Change color function
-			function changeColor(color) {
-				brushColor = color;//Set the global brush color
-							console.log('Is this ever run?');
-			}
-
-			//Do not know how to actually change the size of the brush but this should help.
-			var brushSize = 5;
-
-			function changeSize(size) {
-				brushSize = size;//Update the size of the brush.
-			}
-			//holds whether the brush is a pencil or eraser 
-			//Can add more modes later if in erase mode, color is backround
-			//Also can add line tool where you click twice to add a line
-			//BRUSH MODES 
-			//Mode 0 = pencil
-			//Mode 1 = erase
-			//Mode 3 = line
-			var brushMode = 0;//Default to pencil tool
-			function changeMode(mode){
-				brushMode = mode;//Update the current brush mode
-			}*/
-		    
-		//=======================================================================
-		// End Functions to change the brush variables
-		//=======================================================================
+	//	raster.onLoad = function() {
+		//	console.log('The image has loaded.');
+		//};
 		var canvas = document.getElementById('whiteBoard');
 		paper.setup(canvas);
 
@@ -68,7 +40,7 @@ function boardControl($scope,socket){
 					color:path.strokeColor,
 					cap:path.strokeCap,
 					flag:0,
-						p:tmp});
+						p:$scope.clr});
 			}else if($scope.brushMode===0){
 				path = new Path();
 				path.strokeCap = 'round';
@@ -82,7 +54,7 @@ function boardControl($scope,socket){
 					color:path.strokeColor,
 					cap:path.strokeCap,
 					flag:0,
-						p:tmp});
+						p:$scope.clr});
 
 			}else if($scope.brushMode===2){//most complex since it must wait for two clicks DOES NOT UPDATE OTHER USERS CANVAS
 				if(numPoints === 0){
@@ -101,12 +73,19 @@ function boardControl($scope,socket){
 						color:path.strokeColor,
 						cap:path.strokeCap,
 						flag:1,
-						p:tmp});
+						p:$scope.clr});
 				}
 
 			}
 
+			if($scope.clr>=1){
+				if(project.activeLayer){
+					project.activeLayer.remove();
 
+					project.activeLayer = new Layer();
+				}
+				$scope.clr = 0;
+			}
 			view.draw();
 		}
 		tool.onMouseUp = function(event) {
@@ -117,8 +96,11 @@ function boardControl($scope,socket){
 			// 						 y:tpoint.y });
 			// 	view.draw();
 			// }
-			//canvas_json = project.exportJSON();
-			//console.log(canvas_json);
+
+			//var url = 'http://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png';
+			//var raster = new Raster(url);
+			//var canvas_ras = raster.toDataURL();
+			//console.log(canvas_ras);
 	}
 
 		tool.onMouseDrag = function(event) {
@@ -142,6 +124,7 @@ function boardControl($scope,socket){
 			console.log('error finding user');
 			return -1;
 		}
+
 			
 		//////////////////////////////////////////
 		//socket actions
@@ -162,13 +145,33 @@ function boardControl($scope,socket){
 		});
 		//Function that grabs an updated canvas_json for specified client
 		socket.on('getCanvas', function(data){
-			var canvas_json = project.exportJSON();
+			if(project.activeLayer){
+				var raster = project.activeLayer.rasterize();
+			//var canvas_json = raster.toDataURL;
+			var canvas_json = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+			}else{
+				canvas_json = null;
+			}
+
 			socket.emit('returnCanvas', { canvas_json:canvas_json,
 										  id : data.id });
 		});
 
 		socket.on('returnCanvas', function(data){
-			project.importJSON(data.canvas_json);
+
+			if(project.activeLayer){
+				project.activeLayer.remove();
+			}
+			//			var url = 'http://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png';
+			//var raster = new Raster(url);
+			if(data.canvas_json!=null){
+				var raster = new Raster(data.canvas_json);
+				raster.position = view.center;
+			}
+			//raster.drawImage(data.canvas_json, 0)
+			//project.importJSON(data.canvas_json);
+			//project.activeLayer.remove();
+
 		});
 
 		socket.on('removeUser', function(data) {
@@ -186,15 +189,21 @@ function boardControl($scope,socket){
 					tmpPath.strokeCap = data.cap;
 					tmpPath.strokeColor = data.color;
 					tmpPath.add({x:data.p1[1], y:data.p1[2]});
-				}else{//TODO Make lines print for guests
+				}else{
 					var tmpPath = new Path.Line({x:data.p2[1], y:data.p2[2]},{x:data.p1[1], y:data.p1[2]});
-					console.log(data.p2 + ' ' + data.p1);
+					//console.log(data.p2 + ' ' + data.p1);
 					tmpPath.strokeWidth = data.size;
 					tmpPath.strokeColor = data.color;
 					tmpPath.strokeCap = data.cap;
 
 				}
 				guests[index].path = tmpPath;
+				if(data.p>=1){
+					if(project.activeLayer){
+						project.activeLayer.remove();
+						project.activeLayer = new Layer();
+					}
+				}
 			//	console.log('path stuff: ' + tmpPath);
 				view.draw();
 
